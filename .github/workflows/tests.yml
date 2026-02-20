@@ -1,0 +1,28 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test-macos:
+    name: Test on macOS
+    runs-on: macos-15
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Swift version
+      run: swift --version
+    
+    - name: Build
+      run: swift build -v
+    
+    - name: Run tests
+      run: swift test -v
+    
+    - name: Check Swift 6 concurrency
+      run: swift build -Xswiftc -strict-concurrency=complete
